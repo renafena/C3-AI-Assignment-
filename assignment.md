@@ -1,20 +1,19 @@
-### Using Git Rebase
+# Using git rebase
 
-### Why Rebase instead of merge?
+Rebase, like merge, enables you to integrate, or commit, changes from a branch into the main branch. With merge, you preserve the branching structure and can see the commits from each branch. With rebase, you reapply all the commits as one commit to the main branch. 
 
-While working collaboratively, it's essential to maintain a clear and concise version history. Branches keep work independent. Writers work on branches independently. Eventually, you will integrate changes to the main branch. This is where rebasing becomes a valuable technique.
+## Benefits of rebase
 
-While merging preserves the branching structure and shows how changes from different branches came together, rebasing takes a different approach. Instead of combining branches with a merge commit, rebasing reapplies your changes on top of the updated main branch, resulting in a linear history.
+Use rebase to:
 
-### linear commit history
+* Declutter the version history.
+* Minimize collaboration conflicts.
 
-Most compelling reasons to use rebase is to maintain a clean and linear commit history. In documentation projects, where updates can happen frequently and involve multiple contributors, a series of merge commits can more quick clutter the project history.
+As a best practice, regularly rebase when you want to integrate the latest changes from the main branch into your working branch. This essentially applies commits on the tip of the base branch.
 
-With rebasing, your commits are "rebased" onto the latest version of the main branch, making it look as if your changes were made after the most recent updates. This eliminates unnecessary merge commits and makes the history more easy to read.
+### Declutter version history
 
-**Example**:
-
-Instead of seeing:
+When many contributors make small but frequent updates, you can rebase to squash them into a single commit. Look at this example of a version history with merge commits:
 
 ```text
 *   Merge branch 'fix-typos'  
@@ -24,55 +23,37 @@ Instead of seeing:
 * Updated introduction  
 ```
 
-After rebasing, you get a straightforward history:
-
+Now look at the same version history after rebasing:
 ```text
 * Fixed typo in chapter 2  
 * Fixed typo in chapter 1  
 * Updated introduction  
 ```
 
-This simplicity is especially helpful when looking back at project changes or performing reviews.
+Simplifying the version history especially helps when looking back at project changes or performing reviews.
 
-### Easy-to-Track Changes
+### Minimize collaboration conflicts
 
-In documentation work, it’s common to make small but frequent updates. Rebasing allows you to squash minor, related changes into a single commit, making the final history more concise and understandable.
+Rebasing enables you to update your branch with the latest changes before finalizing your work. This means you can handle any conflicts proactively on your branch. It also helps reduce the chance of introducing new conflicts into the main branch.
 
-For example, if you made three minor edits to a tutorial in separate commits, you can squash them into one meaningful commit during an interactive rebase. This way, your commit log doesn’t overwhelm reviewers with minor changes.
+## When to avoid rebasing
 
-### Minimal Conflict During Collaboration
+Avoid rebasing public or shared branches. Because rebasing changes the commit history, it might cause confusion or disrupt collaborative work when others have already pulled your changes.
 
-When you rebase your branch before integrating it into the main documentation, you’re updating your branch with the latest changes before finalizing your work. This means you have handled any conflicts proactively on your branch, rather than dealing with them during a merge. This helps reduce the chance of introducing new conflicts into the main branch.
+## Steps to rebase
 
-## How to Rebase
-
-Regular rebasing is useful when you just want to integrate the latest changes from the main branch into your working branch. This essentially applies commits on the tip of the base branch.
-
-(1) Check out your feature branch:
-
+1. Check out your feature branch: <br>
 ```text
 git checkout my-branch
 ```
-
-(2) Update your main branch:
-
-(3) Rebase your branch onto the main branch:
-
-(4) Resolve any conflicts:
-
-Git will pause and prompt you to resolve conflicts if any arise. Edit the conflicting files and mark them as resolved:
-
+2. Update your main branch.
+3. Rebase your branch onto the main branch.
+4. Edit any conflicting files and mark them as resolved: <br>
 ```text
 git add <file>
 git rebase --continue
 ```
-
-(5) Push your changes:
-
+5. Push your changes: <br>
 ```text
 git push --force
 ```
-
-### When to Avoid Rebase
-
-While rebasing is useful for maintaining a clean history, it’s essential to avoid rebasing public or shared branches. Rebasing changes the commit history, which can cause confusion or disrupt collaborative work if others have already pulled your changes.
